@@ -1,0 +1,14 @@
+---
+title: "tarea3_edwin_feijoo_setup"
+author: "Edwin Paúl Feijoo Criollo"
+date: "9/7/2019"
+output: html_document
+---
+
+```{r}
+#install.packages("kknn")
+library(kknn)
+
+source("R/preparation/datachurn.R")
+```
+

@@ -1,0 +1,1 @@
+write.csv2(chrun, "./data/raw/datach.csv", dec = ",")

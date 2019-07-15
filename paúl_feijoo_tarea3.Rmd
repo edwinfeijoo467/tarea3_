@@ -1,0 +1,125 @@
+---
+title: "edwinpaul_feijoo_tarea3"
+author: "Edwin Paúl Feijoo Criollo"
+date: "15/7/2019"
+output: html_document
+---
+
+# 1 Cree la estructura de carpetas para su proyecto y documente cual es el objetivo de cada una de las carpetas.
+
+
+```{r}
+# install.packages("usethis")
+library(usethis)
+# R
+# Almacena código fuente R (aunque puede almacenar código de otros lenguajes de programación como Python, Stan, C++). A lo largo del proceso de análisis debemos aplicar ciertos cálculos y transformaciones que almacenaremos para luego utilizarlo una o varias veces en el proceso de análisis.
+
+use_directory("R")
+
+#Preparation
+#Lectura de los datos ya estén estos almacenados en CSV, base de datos relacional, NoSQL, Hadoop, etc. Tenemos que recuperar datos de múltiples fuentes todo el tiempo, así que es mejor tener una función o más funciones dedicada para la recuperación de datos.
+
+use_directory("R/preparation")
+
+#Processing
+#El formato original de los datos la gran mayoría de las veces no se ajusta a lo que el modelo necesita, por lo que se realizan transformaciones sobre las tablas originales ya sea para cambiar su formato o para crear nuevas variables, todo esto debe documentarse muy bien con el fin de que sea un proceso replicable en futuros casos de análisis.
+
+
+use_directory("R/processing")
+
+#Modeling
+#Construcción de modelos ya sean estos de clasificación, regresión, clusterig, etc. No sólo debemos incluir la creación del modelo, sino también la evaluación del mismo, así como la lógica que nos permite trabajar con múltiples modelos en caso de se necesario.
+
+use_directory("R/modeling")
+#Test
+#En este carpeta construiremos una serie de validaciones que nos permitirán verificar que las funciones de nuestro código retornen lo esperado y así poder detectar si que funciones se vieron afectadas con un cambio de nuestro código.
+
+
+use_directory("test")
+#Data/Raw
+#En esta carpeta almacenaremos una copia local de la lectura de datos generada en “preparation”, esto con el fin de poder trabajar sin conexión a red o en una red que tenga restringido el acceso al origen de los datos, el que nuestra fuente de datos sea estática que nos permite verificar los resultados de nuestro proceso de análisis en etapas de análisis y entrenamiento.
+
+use_directory("data/raw")
+
+#Data/Processed
+#Una vez terminado nuestro proceso de análisis guardaremos de forma local una copia de los resultados obtenidos eso con el fin de evitar repetir todo el proceso a la hora de construir nuestros reportes.
+
+
+use_directory("data/processed")
+use_directory("reports/img")
+
+#Reports
+#En esta sección almacenaremos los .Rmd de nuestro reportes así como las imágenes y archivos css requeridos para la creación de los documentos.
+use_directory("reports/css")
+```
+##b [30 puntos] Respetando la estructura de carpetas seleccionada realice un analisis exploratorio
+```{r}
+#1) Lectura de datos (csv o xlsx).
+
+datos <- read.csv(file = "C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\data\\raw\\datach.csv", 
+                  row.names=1)
+```
+```{r}
+# 2) Transformacion y limpieza de los datos.
+
+# Eliminar todas las filas que contengan algun valor nulo (forma simple)
+datos <- na.omit(datos)
+
+# Transformo las variables
+datos$IdCliente =as.character(datos$IdCliente) 
+datos$Apellido =as.character(datos$Apellido) 
+datos$ScoringCrediticio=as.numeric(datos$ScoringCrediticio) 
+datos$Pais=as.factor(datos$Pais) 
+datos$Genero=as.factor(datos$Genero) 
+datos$Edad =as.numeric(datos$Edad) 
+datos$IdCuenta =as.character(datos$IdCuenta) 
+datos$BalanceCuenta=as.numeric(datos$BalanceCuenta) 
+datos$CantidadProductos=as.numeric(datos$CantidadProductos) 
+datos$TarjetaCredito=as.factor(datos$TarjetaCredito) 
+datos$Activo=as.factor(datos$Activo) 
+datos$SalarioEstimado=as.numeric(datos$SalarioEstimado) 
+datos$DejaBanco=as.factor(datos$DejaBanco) 
+
+#3) Analisis exploratorio de los datos.
+
+
+# Pruebas tipo variable 
+
+library(testthat)
+
+# examino existencia de datos
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_raw.R")
+
+# examino caracteristicas de variables
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\idcliente.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_activo.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_apellido.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_balanceCuenta.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_cantidadProductos.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_dejaBanco.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_edad.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_genero.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_IdCuenta.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_pais.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_salario.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_scoring.R")
+
+test_file("C:\\Users\\efeijoo\\Documents\\proyecto\\tarea3\\test\\test_tarjetadeCredito.R")
+
+
+
+```
+
